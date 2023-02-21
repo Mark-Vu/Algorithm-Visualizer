@@ -60,8 +60,8 @@ def generate_list(n):
 
 def main():
     app = App(800, 800, "Algorithm Visualizer")
-    LIST_LENGTH = 20
-    fps = 5
+    LIST_LENGTH = 50
+    fps = 60
 
     lst = generate_list(LIST_LENGTH)
     algo = Algo(lst, app)
@@ -75,11 +75,11 @@ def main():
     while not exit:
         clock.tick(fps)
         if not sorting:
-            app.draw_app(lst, sorting, sorted_elements=algo.sorted_elements)
+            app.draw_app(algo.lst, sorting, sorted_elements=algo.sorted_elements)
         else:
             try:
                 next(sorting_algo)
-            except Exception:
+            except StopIteration:
                 sorting = False
 
         for event in pygame.event.get():
@@ -89,13 +89,15 @@ def main():
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_r:
                     sorting = False
-                    sorted_elements = {}
-                    lst = generate_list(LIST_LENGTH)
+                    algo.sorted_elements = {}
+                    algo.lst = generate_list(LIST_LENGTH)
 
                     if algo_name == "bubble_sort":
                         sorting_algo = algo.bubble_sort()
                     elif algo_name == "insertion_sort":
                         sorting_algo = algo.insertion_sort()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    pass
 
                 if event.key == pygame.K_SPACE:
                     sorting = not sorting
