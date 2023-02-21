@@ -2,6 +2,9 @@ import pygame
 from frame import Frame
 
 class App:
+    """
+    Resposible for everything happening within the app and contains app configuration
+    """
     BACKGROUND_COLOR = (255, 255, 255)
     def __init__(self, width, height, name):
         self.WIDTH = width
@@ -17,7 +20,8 @@ class App:
 
     def define_frame(self, lst, color={}, sorted_elements={}):
         self.frame.draw_frame(self.screen)
-        self.frame.draw_list(self.screen, lst, self.HEIGHT, color, sorted_elements)
+        self.frame.draw_list(self.screen, lst, self.HEIGHT,
+                             colors=color, sorted_elements=sorted_elements)
 
     def draw_app(self, lst, sort, color={}, sorted_elements={}):
         self.screen.fill(self.BACKGROUND_COLOR)

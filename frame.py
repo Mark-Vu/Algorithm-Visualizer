@@ -1,11 +1,15 @@
 import pygame
 
 class Frame:
+    """
+    This class will be responsible for the sorting frame and blocks configuration
+    """
     BLOCK_COLORS = {
         "BLUE" : (0, 71, 171),
         "GREEN" : (0, 255, 0),
         "RED" : (255, 0, 0),
-        "ORANGE": (255,165,0)
+        "ORANGE": (255,165,0),
+        "YELLOW": (255,255,0)
     }
     def __init__(self, x, y, frame_width, frame_height):
         self.GAP = 5
@@ -20,9 +24,12 @@ class Frame:
 
     def draw_list(self, screen, lst, screen_height, colors={}, sorted_elements={}):
         """
-        :param screen: pygame display
-        :param lst: list()
-        :param screen_height: int
+        Draw and coloring the blocks
+        :param screen -> pygame display
+        :param lst -> list()
+        :param screen_height -> int
+        :param colors -> dict: for getting the colors of sorting blocks
+        :param sorted_elements -> dict: for getting the orange color of sorted blocks
         :return:
         """
         self.block_width = (self.frame_width - ( (len(lst) - 1) * self.GAP) ) / len(lst)
