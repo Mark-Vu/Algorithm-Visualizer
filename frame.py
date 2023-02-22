@@ -5,7 +5,7 @@ class Frame:
     This class will be responsible for the sorting frame and blocks configuration
     """
     BLOCK_COLORS = {
-        "BLUE" : (0, 71, 171),
+        "BLUE" : "#77C3EC",
         "GREEN" : (0, 255, 0),
         "RED" : (255, 0, 0),
         "ORANGE": (255,165,0),
@@ -17,7 +17,7 @@ class Frame:
         self.y = y
         self.frame_width = frame_width
         self.frame_height = frame_height
-        self.BACKGROUND_COLOR = (211, 211, 211)
+        self.BACKGROUND_COLOR = (24,25,29)
 
     def draw_frame(self, screen):
         pygame.draw.rect(screen, self.BACKGROUND_COLOR, (self.x, self.y, self.frame_width, self.frame_height))
