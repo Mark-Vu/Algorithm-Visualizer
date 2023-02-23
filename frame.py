@@ -10,7 +10,8 @@ class Frame:
         "GREEN" : (0, 255, 0),
         "RED" : (255, 0, 0),
         "ORANGE": (255,165,0),
-        "YELLOW": (255,255,0)
+        "YELLOW": (255,255,0),
+        "DARK_GREEN": (1, 50, 32)
     }
     def __init__(self, x, y, frame_width, frame_height):
         self.GAP = 5

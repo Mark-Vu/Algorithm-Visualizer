@@ -12,8 +12,8 @@ def generate_list(n):
 
 def main():
     app = App(800, 800, "Algorithm Visualizer")
-    LIST_LENGTH =20
-    fps = 30
+    LIST_LENGTH =50
+    fps = 60
 
     lst = generate_list(LIST_LENGTH)
     algo = Algo(lst, app)
@@ -59,8 +59,8 @@ def main():
                 x, y = event.pos
                 if app.play_button.clicked((x, y)):
                     if sorting:
-                        algo.sort_list()
-                        sorting = False
+                        sorting_algo = algo.choose_sort(algo_name="reset")
+
                     else:
                         if algo.is_sorted():
                             sorting_algo = algo.reset_list(new_list=generate_list(LIST_LENGTH),algo_name=algo_name)

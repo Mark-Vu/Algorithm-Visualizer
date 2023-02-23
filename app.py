@@ -46,7 +46,10 @@ class App:
                    button_height, text='Selection'): "selection_sort",
 
             Button(self.screen, button_x, button_height + 20, button_width, button_height,
-                   text='Merge sort'): "merge_sort"
+                   text='Merge sort'): "merge_sort",
+
+            Button(self.screen, button_x + button_gap + button_width, button_height + 20, button_width, button_height,
+                   text='Quick sort'): "quick_sort"
         }
         self.reset_button = Button(self.screen, self.WIDTH-self.X_PAD - 50, self.HEIGHT // 7, 50, 40, text='Reset')
 

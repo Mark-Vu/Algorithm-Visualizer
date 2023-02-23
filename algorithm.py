@@ -1,5 +1,5 @@
 import pygame
-
+from collections import deque
 pygame.init()
 class Algo:
     """
@@ -12,11 +12,19 @@ class Algo:
         self.sorted_elements = {}
 
     def sort_list(self):
-        self.lst.sort()
-        for element in self.lst:
-            self.filled_sorted(element, "ORANGE")
+        """
+        sort the list and paint orrange
+        """
+        for i in self.lst:
+            self.filled_sorted(i, "ORANGE")
+            self.app.draw_app(self.lst, True,
+                              sorted_elements=self.sorted_elements)
+            yield
 
     def is_sorted(self):
+        """
+        :return: -> bool: check if the list is sorted
+        """
         for i in range(self.len_lst):
             if self.lst[i] != i + 1:
                 return False
@@ -74,11 +82,7 @@ class Algo:
                 self.lst[j + 1] = self.lst[j]
                 j -= 1
             self.lst[j + 1] = key
-        for i in self.lst:
-            self.filled_sorted(i, "ORANGE")
-            self.app.draw_app(self.lst, True,
-                              sorted_elements=self.sorted_elements)
-            yield
+        yield from self.sort_list()
 
     def merge_sort(self):
         def merge(temp, l, mid, r):
@@ -126,6 +130,48 @@ class Algo:
 
             d = 2 * d
 
+    def quick_sort(self):
+        stack = deque()
+        start = 0
+        end = len(self.lst) - 1
+        stack.append((start, end))
+
+        while stack:
+            start, end = stack.pop()
+
+            # rearrange elements across pivot
+            pivot = self.lst[end]
+            pIndex = start
+
+            for i in range(start, end):
+                self.app.draw_app(self.lst, True, color={i: "RED", pivot: "GREEN", pIndex: "RED"},
+                                  sorted_elements=self.sorted_elements)
+                yield
+                if self.lst[i] <= pivot:
+                    self.app.draw_app(self.lst, True, color={i: "RED", pivot: "GREEN", pIndex: "RED"},
+                                      sorted_elements=self.sorted_elements)
+                    yield
+                    # pygame.time.delay(500)
+                    temp = self.lst[i]
+                    self.lst[i] = self.lst[pIndex]
+                    self.lst[pIndex] = temp
+                    pIndex = pIndex + 1
+
+            self.app.draw_app(self.lst, True, color={end: "YELLOW", pIndex: "YELLOW"},
+                              sorted_elements=self.sorted_elements)
+            yield
+            temp = self.lst[pIndex]
+            self.lst[pIndex] = self.lst[end]
+            self.lst[end] = temp
+
+            if pIndex - 1 > start:
+                stack.append((start, pIndex - 1))
+
+            # push sublist indices containing elements that are
+            # more than the current pIndex to stack
+            if pIndex + 1 < end:
+                stack.append((pIndex + 1, end))
+        yield from self.sort_list()
     def choose_sort(self, algo_name):
         if algo_name == "bubble_sort":
             sorting_algo = self.bubble_sort()
@@ -138,6 +184,14 @@ class Algo:
 
         if algo_name == "merge_sort":
             sorting_algo = self.merge_sort()
+
+        if algo_name == "quick_sort":
+            sorting_algo = self.quick_sort()
+
+        if algo_name == "reset":
+            self.lst.sort()
+            sorting_algo = self.sort_list()
+
         return sorting_algo
 
     def reset_list(self, new_list, algo_name):
