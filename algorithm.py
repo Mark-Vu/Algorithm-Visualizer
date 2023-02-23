@@ -11,7 +11,6 @@ class Algo:
         self.app = app
         self.sorted_elements = {}
 
-
     def sort_list(self):
         self.lst.sort()
         for element in self.lst:
@@ -77,6 +76,9 @@ class Algo:
             self.lst[j + 1] = key
         for i in self.lst:
             self.filled_sorted(i, "ORANGE")
+            self.app.draw_app(self.lst, True,
+                              sorted_elements=self.sorted_elements)
+            yield
 
     def merge_sort(self):
         def merge(temp, l, mid, r):
@@ -137,3 +139,12 @@ class Algo:
         if algo_name == "merge_sort":
             sorting_algo = self.merge_sort()
         return sorting_algo
+
+    def reset_list(self, new_list, algo_name):
+        """
+        Resetting list
+        :return: ->func: returning sorting algo for to set current algo
+        """
+        self.sorted_elements = {}
+        self.lst = new_list
+        return self.choose_sort(algo_name=algo_name)

@@ -12,7 +12,7 @@ def generate_list(n):
 
 def main():
     app = App(800, 800, "Algorithm Visualizer")
-    LIST_LENGTH =50
+    LIST_LENGTH =20
     fps = 30
 
     lst = generate_list(LIST_LENGTH)
@@ -50,9 +50,7 @@ def main():
         if app.reset_button.clicked((x, y)):
             #Reset the sorted list(the orange blocks), generate new list
             sorting = False
-            algo.sorted_elements = {}
-            algo.lst = generate_list(LIST_LENGTH)
-            sorting_algo = algo.choose_sort(algo_name=algo_name)
+            sorting_algo = algo.reset_list(new_list=generate_list(LIST_LENGTH),algo_name=algo_name)
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -64,7 +62,10 @@ def main():
                         algo.sort_list()
                         sorting = False
                     else:
-                        sorting = True
+                        if algo.is_sorted():
+                            sorting_algo = algo.reset_list(new_list=generate_list(LIST_LENGTH),algo_name=algo_name)
+                        else:
+                            sorting = True
 
         pygame.display.update()
 

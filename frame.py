@@ -5,6 +5,7 @@ class Frame:
     This class will be responsible for the sorting frame and blocks configuration
     """
     BLOCK_COLORS = {
+        "LIGHT_GREEN": "#7fdca5",
         "BLUE" : "#77C3EC",
         "GREEN" : (0, 255, 0),
         "RED" : (255, 0, 0),

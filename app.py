@@ -128,9 +128,9 @@ class Button:
 
 class ImageButton():
     IMGS = {
-        "play_img": "algo_visualizer/button_images/play-button.png",
-        "pause_img": "algo_visualizer/button_images/pause-button.png",
-        "reset_img": "algo_visualizer/button_images/reset.png"
+        "play_img": "button_images/play-button.png",
+        "pause_img": "button_images/pause-button.png",
+        "reset_img": "button_images/reset.png"
     }
 
     def __init__(self, screen, pos, img):
@@ -141,7 +141,9 @@ class ImageButton():
         :param img -> str: define what image to use
         """
         self.x, self.y = pos
-        self.image = pygame.image.load(os.path.join(self.IMGS[img]))
+        path = os.path.dirname(os.path.abspath(__file__))
+        file_path = os.path.join(path, self.IMGS[img])
+        self.image = pygame.image.load(file_path)
         screen.blit(self.image, (self.x, self.y))
 
     def clicked(self, mouse_pos):
