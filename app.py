@@ -32,17 +32,21 @@ class App:
         #keep tracks of all buttons
         button_count = 3
         button_width = (self.WIDTH//2) // button_count
+        button_height = (self.HEIGHT - self.frame_height) // 3.5
         button_gap = 20
         button_x = self.WIDTH // 2 - button_gap * button_count
         self.buttons = {
             Button(self.screen, button_x, 0, button_width,
-                   (self.HEIGHT - self.frame_height) // 3.5, text='Bubble') : "bubble_sort",
+                   button_height, text='Bubble') : "bubble_sort",
 
-            Button(self.screen, button_x + button_gap + button_width, 0, (self.WIDTH // 2) // button_count,
-                   (self.HEIGHT - self.frame_height) // 3.5, text='Insertion') : "insertion_sort",
+            Button(self.screen, button_x + button_gap + button_width, 0, button_width,
+                   button_height, text='Insertion') : "insertion_sort",
 
-            Button(self.screen, button_x + (button_gap + button_width) * 2, 0, (self.WIDTH // 2) // button_count,
-                   (self.HEIGHT - self.frame_height) // 3.5, text='Selection'): "selection_sort"
+            Button(self.screen, button_x + (button_gap + button_width) * 2, 0, button_width,
+                   button_height, text='Selection'): "selection_sort",
+
+            Button(self.screen, button_x, button_height + 20, button_width, button_height,
+                   text='Merge sort'): "merge_sort"
         }
         self.reset_button = Button(self.screen, self.WIDTH-self.X_PAD - 50, self.HEIGHT // 7, 50, 40, text='Reset')
 
@@ -58,11 +62,16 @@ class App:
         self.frame.draw_list(self.screen, lst, self.HEIGHT,
                              colors=color, sorted_elements=sorted_elements)
 
-    def draw_buttons(self, sorting=True):
+    def image_btn(self, sorting=True):
         if not sorting:
             self.play_button = ImageButton(self.screen, pos=(self.X_PAD, self.HEIGHT // 6), img="play_img")
         else:
             self.play_button = ImageButton(self.screen, pos=(self.X_PAD, self.HEIGHT // 6), img="pause_img")
+
+    def draw_btn(self, pos):
+        self.reset_button.check_pressed(pos)
+        for button in self.buttons:
+            button.check_pressed(pos)
 
     def display_sort(self, algo_name):
         font = pygame.font.SysFont('consolas', 40)
@@ -72,7 +81,7 @@ class App:
 
     def draw_app(self, lst, sorting, color={}, sorted_elements={}):
         self.screen.fill(self.BACKGROUND_COLOR)
-        self.draw_buttons(sorting)
+        self.image_btn(sorting)
 
         if sorting:
             self.define_frame(lst, color, sorted_elements)
@@ -82,22 +91,23 @@ class App:
 
 class Button:
     FONT = pygame.font.SysFont('consolas', 15)
+    TEXT_COLOR = (255,255,255)
     def __init__(self, screen, x, y, width, height, text='Button'):
         self.x = x
         self.y = y
         self.width = width
         self.height = height
         self.screen = screen
-
         self.fillColors = {
-            'normal': '#ffffff',
-            'hover': '#666666',
+            'normal': '#272727',
+            'hover': '#161616',
             'pressed': (51,51,51),
         }
+
         self.button_surface = pygame.Surface((self.width, self.height))
         self.button_rect = pygame.Rect(self.x, self.y, self.width, self.height)
 
-        self.button_text = self.FONT.render(text, True, (20, 20, 20))
+        self.button_text = self.FONT.render(text, True, self.TEXT_COLOR)
 
 
     def check_pressed(self, mouse_pos):
