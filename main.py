@@ -13,7 +13,7 @@ def generate_list(n):
 def main():
     app = App(800, 800, "Algorithm Visualizer")
     LIST_LENGTH =50
-    fps = 60
+    fps = 20
 
     lst = generate_list(LIST_LENGTH)
     algo = Algo(lst, app)
@@ -57,10 +57,10 @@ def main():
                 exit = True
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = event.pos
+                print(algo.is_sorted())
                 if app.play_button.clicked((x, y)):
                     if sorting:
                         sorting_algo = algo.choose_sort(algo_name="reset")
-
                     else:
                         if algo.is_sorted():
                             sorting_algo = algo.reset_list(new_list=generate_list(LIST_LENGTH),algo_name=algo_name)

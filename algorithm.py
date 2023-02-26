@@ -172,6 +172,38 @@ class Algo:
             if pIndex + 1 < end:
                 stack.append((pIndex + 1, end))
         yield from self.sort_list()
+
+    def heap_sort(self):
+        def heapify(n, i):
+            largest = i
+            self.app.draw_app(self.lst, True, color={i: "RED", largest: "GREEN"}, sorted_elements=self.sorted_elements)
+            yield
+            l = 2 * i + 1
+            r = 2 * i + 2
+            if l < n and self.lst[largest] < self.lst[l]:
+                largest = l
+            if r < n and self.lst[largest] < self.lst[r]:
+                largest = r
+            self.app.draw_app(self.lst, True, color={i: "RED", largest: "GREEN"}, sorted_elements=self.sorted_elements)
+            yield
+            if largest != i:
+                self.lst[i], self.lst[largest] = self.lst[largest], self.lst[i]
+                self.app.draw_app(self.lst, True, color={i: "RED", largest: "GREEN"}, sorted_elements=self.sorted_elements)
+                yield
+                yield from heapify(n, largest)
+
+        n = len(self.lst)
+        # Build a maxheap.
+        for i in range(n // 2 - 1, -1, -1):
+            yield from heapify(n, i)
+
+        # One by one extract elements
+        for i in range(n - 1, 0, -1):
+            self.app.draw_app(self.lst, True, color={0: "RED", i: "GREEN"}, sorted_elements=self.sorted_elements)
+            yield
+            self.lst[i], self.lst[0] = self.lst[0], self.lst[i]  # swap
+            self.sorted_elements[self.lst[i]] = "ORANGE"
+            yield from heapify(i, 0)
     def choose_sort(self, algo_name):
         if algo_name == "bubble_sort":
             sorting_algo = self.bubble_sort()
@@ -187,6 +219,9 @@ class Algo:
 
         if algo_name == "quick_sort":
             sorting_algo = self.quick_sort()
+
+        if algo_name == "heap_sort":
+            sorting_algo = self.heap_sort()
 
         if algo_name == "reset":
             self.lst.sort()

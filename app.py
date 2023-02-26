@@ -30,7 +30,7 @@ class App:
         pygame.display.set_caption(name)
 
         #keep tracks of all buttons
-        button_count = 3
+        button_count = 4
         button_width = (self.WIDTH//2) // button_count
         button_height = (self.HEIGHT - self.frame_height) // 3.5
         button_gap = 20
@@ -49,7 +49,10 @@ class App:
                    text='Merge sort'): "merge_sort",
 
             Button(self.screen, button_x + button_gap + button_width, button_height + 20, button_width, button_height,
-                   text='Quick sort'): "quick_sort"
+                   text='Quick sort'): "quick_sort",
+
+            Button(self.screen, button_x + (button_gap + button_width) * 2, button_height + 20, button_width, button_height,
+                   text='Heap sort'): "heap_sort"
         }
         self.reset_button = Button(self.screen, self.WIDTH-self.X_PAD - 50, self.HEIGHT // 7, 50, 40, text='Reset')
 
