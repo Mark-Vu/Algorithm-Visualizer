@@ -80,10 +80,11 @@ class App:
             button.check_pressed(pos)
 
     def display_sort(self, algo_name):
-        font = pygame.font.SysFont('consolas', 40)
+        text_color = (20, 20, 20)
+        font = pygame.font.SysFont('consolas', 35)
         algo_name = re.sub('[^a-zA-Z0-9 \n\.]', ' ', algo_name).title()
-        text_surface = font.render(algo_name, True, (20, 20, 20))
-        self.screen.blit(text_surface, (10, 10))
+        text_surface = font.render(algo_name, True, text_color)
+        self.screen.blit(text_surface, (self.X_PAD, self.Y_PAD // 3))
 
     def draw_app(self, lst, sorting, color={}, sorted_elements={}):
         self.screen.fill(self.BACKGROUND_COLOR)

@@ -16,8 +16,8 @@ class Algo:
         sort the list and paint orrange
         """
         for i in self.lst:
-            self.filled_sorted(i, "ORANGE")
-            self.app.draw_app(self.lst, True,
+            self.filled_sorted(i, "GREEN")
+            self.app.draw_app(self.lst, True,color={i:"RED"},
                               sorted_elements=self.sorted_elements)
             yield
 
@@ -45,9 +45,9 @@ class Algo:
                     self.lst[j], self.lst[j + 1] = self.lst[j + 1], self.lst[j]
                     self.app.draw_app(self.lst, True, color={j:"GREEN", j+1:"RED"}, sorted_elements=self.sorted_elements)
                     yield
-            self.filled_sorted(self.lst[self.len_lst - 1 - i], "ORANGE")
+            self.filled_sorted(self.lst[self.len_lst - 1 - i], "GREEN")
         #Fill the first block
-        self.filled_sorted(self.lst[0], "ORANGE")
+        self.filled_sorted(self.lst[0], "GREEN")
     def selection_sort(self):
         """
         Fill and color blocks according to bubble sort insertion sort
@@ -61,13 +61,13 @@ class Algo:
                 if self.lst[key] > self.lst[j]:
                     key = j
                 j += 1
-                self.app.draw_app(self.lst, True, color={i:"GREEN",key: "YELLOW", j: "RED"}, sorted_elements=self.sorted_elements)
+                self.app.draw_app(self.lst, True, color={i:"GREEN",key: "BLUE", j: "RED"}, sorted_elements=self.sorted_elements)
                 yield
             self.lst[i], self.lst[key] = self.lst[key], self.lst[i]
-            self.sorted_elements[self.lst[i]] = "ORANGE"
+            self.sorted_elements[self.lst[i]] = "GREEN"
 
-        #Fill the last block with orange
-        self.sorted_elements[self.lst[self.len_lst - 1]] = "ORANGE"
+        #Fill the last block with GREEN
+        self.sorted_elements[self.lst[self.len_lst - 1]] = "GREEN"
 
     def insertion_sort(self):
         for i in range(1, len(self.lst)):
@@ -110,10 +110,10 @@ class Algo:
 
             # copy back
             for b in range(l, r + 1):
-                self.app.draw_app(self.lst, True, color={b: "ORANGE"},
+                self.app.draw_app(self.lst, True, color={b: "GREEN"},
                                   sorted_elements=self.sorted_elements)
                 yield
-                self.filled_sorted(self.lst[b], "ORANGE")
+                self.filled_sorted(self.lst[b], "GREEN")
                 self.lst[b] = temp[b]
 
         low = 0
@@ -157,7 +157,7 @@ class Algo:
                     self.lst[pIndex] = temp
                     pIndex = pIndex + 1
 
-            self.app.draw_app(self.lst, True, color={end: "YELLOW", pIndex: "YELLOW"},
+            self.app.draw_app(self.lst, True, color={end: "BLUE", pIndex: "BLUE"},
                               sorted_elements=self.sorted_elements)
             yield
             temp = self.lst[pIndex]
@@ -202,7 +202,7 @@ class Algo:
             self.app.draw_app(self.lst, True, color={0: "RED", i: "GREEN"}, sorted_elements=self.sorted_elements)
             yield
             self.lst[i], self.lst[0] = self.lst[0], self.lst[i]  # swap
-            self.sorted_elements[self.lst[i]] = "ORANGE"
+            self.sorted_elements[self.lst[i]] = "GREEN"
             yield from heapify(i, 0)
     def choose_sort(self, algo_name):
         if algo_name == "bubble_sort":
