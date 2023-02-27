@@ -52,7 +52,13 @@ class App:
                    text='Quick sort'): "quick_sort",
 
             Button(self.screen, button_x + (button_gap + button_width) * 2, button_height + 20, button_width, button_height,
-                   text='Heap sort'): "heap_sort"
+                   text='Heap sort'): "heap_sort",
+
+            Button(self.screen, button_x + (button_gap + button_width) * 3, 0, button_width,
+                   button_height, text="Shaker"): "shaker_sort",
+
+            Button(self.screen, button_x + (button_gap + button_width) * 3, button_height + 20, button_width,
+                   button_height, text="Tim sort"): "tim_sort"
         }
         self.reset_button = Button(self.screen, self.WIDTH-self.X_PAD - 50, self.HEIGHT // 7, 50, 40, text='Reset')
 
@@ -97,7 +103,8 @@ class App:
 
 
 class Button:
-    FONT = pygame.font.SysFont('consolas', 15)
+    FONT_SIZE = 15
+    FONT = pygame.font.SysFont('consolas', FONT_SIZE)
     TEXT_COLOR = (255,255,255)
     def __init__(self, screen, x, y, width, height, text='Button'):
         self.x = x

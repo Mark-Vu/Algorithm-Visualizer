@@ -204,24 +204,51 @@ class Algo:
             self.lst[i], self.lst[0] = self.lst[0], self.lst[i]  # swap
             self.sorted_elements[self.lst[i]] = "GREEN"
             yield from heapify(i, 0)
+
+    def shaker_sort(self):
+        n = self.len_lst
+        swapped = True
+        start = 0
+        end = n - 1
+        while swapped:
+            swapped = False
+            for i in range(start, end):
+                if (self.lst[i] > self.lst[i + 1]):
+                    self.app.draw_app(self.lst, True, color={i:"RED", i+1:"GREEN"}, sorted_elements=self.sorted_elements)
+                    yield
+                    self.lst[i], self.lst[i+1] = self.lst[i+1], self.lst[i]
+                    swapped = True
+            if not swapped:
+                #Then the list is sorted
+                break
+
+            swapped = False
+            for i in reversed(range(start, end)):
+                if (self.lst[i] > self.lst[i + 1]):
+                    self.app.draw_app(self.lst, True, color={i: "RED", i + 1: "GREEN"},
+                                      sorted_elements=self.sorted_elements)
+                    yield
+                    self.lst[i], self.lst[i+1] = self.lst[i+1], self.lst[i]
+                    swapped = True
+            start += 1
+        yield from self.sort_list()
+
+    def tim_sort(self):
+        pass
+
     def choose_sort(self, algo_name):
-        if algo_name == "bubble_sort":
-            sorting_algo = self.bubble_sort()
-
-        if algo_name == "insertion_sort":
-            sorting_algo = self.insertion_sort()
-
-        if algo_name == "selection_sort":
-            sorting_algo = self.selection_sort()
-
-        if algo_name == "merge_sort":
-            sorting_algo = self.merge_sort()
-
-        if algo_name == "quick_sort":
-            sorting_algo = self.quick_sort()
-
-        if algo_name == "heap_sort":
-            sorting_algo = self.heap_sort()
+        self.algos = {
+            "bubble_sort": self.bubble_sort(),
+            "insertion_sort": self.insertion_sort(),
+            "selection_sort": self.selection_sort(),
+            "merge_sort": self.merge_sort(),
+            "quick_sort": self.quick_sort(),
+            "heap_sort": self.heap_sort(),
+            "shaker_sort": self.shaker_sort(),
+            "tim_sort": self.tim_sort()
+        }
+        if algo_name in self.algos:
+            sorting_algo = self.algos[algo_name]
 
         if algo_name == "reset":
             self.lst.sort()

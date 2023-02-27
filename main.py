@@ -57,7 +57,6 @@ def main():
                 exit = True
             if event.type == pygame.MOUSEBUTTONDOWN:
                 x, y = event.pos
-                print(algo.is_sorted())
                 if app.play_button.clicked((x, y)):
                     if sorting:
                         sorting_algo = algo.choose_sort(algo_name="reset")
