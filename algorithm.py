@@ -10,6 +10,8 @@ class Algo:
         self.len_lst = len(self.lst)
         self.app = app
         self.sorted_elements = {}
+        self.comparison = 0
+        self.swap = 0
 
     def sort_list(self):
         """
@@ -41,10 +43,13 @@ class Algo:
 
         for i in range(self.len_lst - 1):
             for j in range(0, self.len_lst - i - 1):
+                self.comparison += 1
+                self.app.draw_app(self.lst, True, color={j: "GREEN", j + 1: "RED"},
+                                  sorted_elements=self.sorted_elements)
+                yield
                 if self.lst[j] > self.lst[j + 1]:
+                    self.swap += 1
                     self.lst[j], self.lst[j + 1] = self.lst[j + 1], self.lst[j]
-                    self.app.draw_app(self.lst, True, color={j:"GREEN", j+1:"RED"}, sorted_elements=self.sorted_elements)
-                    yield
             self.filled_sorted(self.lst[self.len_lst - 1 - i], "GREEN")
         #Fill the first block
         self.filled_sorted(self.lst[0], "GREEN")
@@ -57,13 +62,16 @@ class Algo:
         for i in range(self.len_lst - 1):
             key = i
             j = i + 1
+            self.comparison += 1
             while j < self.len_lst:
+                self.comparison += 1
                 if self.lst[key] > self.lst[j]:
                     key = j
                 j += 1
                 self.app.draw_app(self.lst, True, color={i:"GREEN",key: "BLUE", j: "RED"}, sorted_elements=self.sorted_elements)
                 yield
             self.lst[i], self.lst[key] = self.lst[key], self.lst[i]
+            self.swap += 1
             self.sorted_elements[self.lst[i]] = "GREEN"
 
         #Fill the last block with GREEN
@@ -72,16 +80,18 @@ class Algo:
     def insertion_sort(self):
         for i in range(1, len(self.lst)):
             key = self.lst[i]
-
+            self.comparison += 1
             j = i - 1
             while j >= 0 and key < self.lst[j]:
+                self.comparison += 1
                 self.app.draw_app(self.lst, True, color={i: "GREEN", j-1: "RED"},
                                   sorted_elements=self.sorted_elements)
                 yield
-
                 self.lst[j + 1] = self.lst[j]
+                self.swap += 1
                 j -= 1
             self.lst[j + 1] = key
+
         yield from self.sort_list()
 
     def merge_sort(self):
@@ -91,6 +101,7 @@ class Algo:
             c = mid + 1
 
             while b <= mid and c <= r:
+                self.comparison += 1
                 self.app.draw_app(self.lst, True, color={b: "RED", c:"GREEN"},
                 sorted_elements = self.sorted_elements)
                 yield
@@ -104,6 +115,7 @@ class Algo:
 
             # remaining elements
             while b < len(self.lst) and b <= mid:
+                self.comparison += 1
                 temp[a] = self.lst[b]
                 a = a + 1
                 b = b + 1
@@ -114,6 +126,7 @@ class Algo:
                                   sorted_elements=self.sorted_elements)
                 yield
                 self.filled_sorted(self.lst[b], "GREEN")
+                self.swap += 1
                 self.lst[b] = temp[b]
 
         low = 0
@@ -121,6 +134,7 @@ class Algo:
         temp = self.lst.copy()
         d = 1
         while d <= high - low:
+            self.comparison += 1
             for b in range(low, high, 2 * d):
                 l = b
                 mid = b + d - 1
@@ -147,11 +161,12 @@ class Algo:
                 self.app.draw_app(self.lst, True, color={i: "RED", pivot: "GREEN", pIndex: "RED"},
                                   sorted_elements=self.sorted_elements)
                 yield
+                self.comparison += 1
                 if self.lst[i] <= pivot:
                     self.app.draw_app(self.lst, True, color={i: "RED", pivot: "GREEN", pIndex: "RED"},
                                       sorted_elements=self.sorted_elements)
                     yield
-                    # pygame.time.delay(500)
+                    self.swap += 1
                     temp = self.lst[i]
                     self.lst[i] = self.lst[pIndex]
                     self.lst[pIndex] = temp
@@ -163,13 +178,16 @@ class Algo:
             temp = self.lst[pIndex]
             self.lst[pIndex] = self.lst[end]
             self.lst[end] = temp
+            self.swap += 1
 
             if pIndex - 1 > start:
+                self.comparison += 1
                 stack.append((start, pIndex - 1))
 
             # push sublist indices containing elements that are
             # more than the current pIndex to stack
             if pIndex + 1 < end:
+                self.comparison += 1
                 stack.append((pIndex + 1, end))
         yield from self.sort_list()
 
@@ -181,15 +199,19 @@ class Algo:
             l = 2 * i + 1
             r = 2 * i + 2
             if l < n and self.lst[largest] < self.lst[l]:
+                self.comparison += 1
                 largest = l
             if r < n and self.lst[largest] < self.lst[r]:
+                self.comparison += 1
                 largest = r
             self.app.draw_app(self.lst, True, color={i: "RED", largest: "GREEN"}, sorted_elements=self.sorted_elements)
             yield
             if largest != i:
+                self.comparison += 1
                 self.lst[i], self.lst[largest] = self.lst[largest], self.lst[i]
                 self.app.draw_app(self.lst, True, color={i: "RED", largest: "GREEN"}, sorted_elements=self.sorted_elements)
                 yield
+                self.swap += 1
                 yield from heapify(n, largest)
 
         n = len(self.lst)
@@ -202,6 +224,7 @@ class Algo:
             self.app.draw_app(self.lst, True, color={0: "RED", i: "GREEN"}, sorted_elements=self.sorted_elements)
             yield
             self.lst[i], self.lst[0] = self.lst[0], self.lst[i]  # swap
+            self.swap += 1
             self.sorted_elements[self.lst[i]] = "GREEN"
             yield from heapify(i, 0)
 
@@ -213,9 +236,12 @@ class Algo:
         while swapped:
             swapped = False
             for i in range(start, end):
+                self.comparison += 1
+                self.app.draw_app(self.lst, True, color={i: "RED", i + 1: "GREEN"},
+                                  sorted_elements=self.sorted_elements)
+                yield
                 if (self.lst[i] > self.lst[i + 1]):
-                    self.app.draw_app(self.lst, True, color={i:"RED", i+1:"GREEN"}, sorted_elements=self.sorted_elements)
-                    yield
+                    self.swap += 1
                     self.lst[i], self.lst[i+1] = self.lst[i+1], self.lst[i]
                     swapped = True
             if not swapped:
@@ -223,18 +249,43 @@ class Algo:
                 break
 
             swapped = False
-            for i in reversed(range(start, end)):
+            end -= 1
+            for i in range(end-1, start-1, -1):
+                self.comparison += 1
+                self.app.draw_app(self.lst, True, color={i: "RED", i + 1: "GREEN"},
+                                  sorted_elements=self.sorted_elements)
+                yield
                 if (self.lst[i] > self.lst[i + 1]):
-                    self.app.draw_app(self.lst, True, color={i: "RED", i + 1: "GREEN"},
-                                      sorted_elements=self.sorted_elements)
-                    yield
+                    self.swap += 1
                     self.lst[i], self.lst[i+1] = self.lst[i+1], self.lst[i]
                     swapped = True
             start += 1
         yield from self.sort_list()
 
-    def tim_sort(self):
-        pass
+    def shell_sort(self):
+        gap = self.len_lst // 2
+        while gap > 0:
+            j = gap
+            while j < self.len_lst:
+                i = j - gap
+                while i >= 0:
+                    self.comparison += 1
+                    self.app.draw_app(self.lst, True, color={i + gap: "RED", i: "GREEN"},
+                                      sorted_elements=self.sorted_elements)
+                    yield
+                    if self.lst[i + gap] > self.lst[i]:
+                        yield
+                        break
+                    else:
+                        self.lst[i + gap], self.lst[i] = self.lst[i], self.lst[i + gap]
+                        yield
+                        self.swap += 1
+
+                    i = i - gap
+                j += 1
+                yield
+            gap = gap // 2
+        yield from self.sort_list()
 
     def choose_sort(self, algo_name):
         self.algos = {
@@ -245,12 +296,14 @@ class Algo:
             "quick_sort": self.quick_sort(),
             "heap_sort": self.heap_sort(),
             "shaker_sort": self.shaker_sort(),
-            "tim_sort": self.tim_sort()
+            "shell_sort": self.shell_sort()
         }
         if algo_name in self.algos:
             sorting_algo = self.algos[algo_name]
 
         if algo_name == "reset":
+            self.swap = 0
+            self.comparison = 0
             self.lst.sort()
             sorting_algo = self.sort_list()
 
@@ -263,4 +316,6 @@ class Algo:
         """
         self.sorted_elements = {}
         self.lst = new_list
+        self.swap = 0
+        self.comparison = 0
         return self.choose_sort(algo_name=algo_name)

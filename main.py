@@ -12,7 +12,7 @@ def generate_list(n):
 
 def main():
     app = App(800, 800, "Algorithm Visualizer")
-    LIST_LENGTH = 50
+    LIST_LENGTH = 80
     fps = 30
 
     lst = generate_list(LIST_LENGTH)
@@ -44,8 +44,8 @@ def main():
                     algo_name = name
             sorting_algo = algo.choose_sort(algo_name=algo_name)
 
-        #Display the current sorting algo
-        app.display_sort(algo_name)
+        #Display the current sorting algo and their info
+        app.display_sort(algo_name, algo.swap, algo.comparison)
 
         if app.reset_button.clicked((x, y)):
             #Reset the sorted list(the orange blocks), generate new list

@@ -58,7 +58,7 @@ class App:
                    button_height, text="Shaker"): "shaker_sort",
 
             Button(self.screen, button_x + (button_gap + button_width) * 3, button_height + 20, button_width,
-                   button_height, text="Tim sort"): "tim_sort"
+                   button_height, text="Shell sort"): "shell_sort"
         }
         self.reset_button = Button(self.screen, self.WIDTH-self.X_PAD - 50, self.HEIGHT // 7, 50, 40, text='Reset')
 
@@ -85,13 +85,24 @@ class App:
         for button in self.buttons:
             button.check_pressed(pos)
 
-    def display_sort(self, algo_name):
+    def display_sort(self, algo_name, swap, comparison):
         text_color = (20, 20, 20)
-        font = pygame.font.SysFont('consolas', 35)
+        algo_font = pygame.font.SysFont('consolas', 35)
+        info_font = pygame.font.SysFont('consolas', 25)
+        algo_y = 10
+        #algorithm name
         algo_name = re.sub('[^a-zA-Z0-9 \n\.]', ' ', algo_name).title()
-        text_surface = font.render(algo_name, True, text_color)
-        self.screen.blit(text_surface, (self.X_PAD, self.Y_PAD // 3))
+        text_surface = algo_font.render(algo_name, True, text_color)
+        self.screen.blit(text_surface, (self.X_PAD, algo_y))
 
+        #Displaying swap and comparison times
+        swap_text = "Swaps: " + str(swap)
+        swap_surface = info_font.render(swap_text, True, text_color)
+        self.screen.blit(swap_surface, (self.X_PAD, algo_y + 70))
+
+        comparison_text = "Comparisons: " + str(comparison)
+        comparison_surface = info_font.render(comparison_text, True, text_color)
+        self.screen.blit(comparison_surface, (self.X_PAD, algo_y + 40))
     def draw_app(self, lst, sorting, color={}, sorted_elements={}):
         self.screen.fill(self.BACKGROUND_COLOR)
         self.image_btn(sorting)
