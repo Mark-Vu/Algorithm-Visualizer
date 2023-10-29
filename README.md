@@ -28,7 +28,7 @@ Before you dive in, here's a sneak peek of what the Sorting Visualizer has in st
 
     ```bash
     git clone https://github.com/Mark-Vu/Algorithm-Visualizer.git
-    cd algo_visualizer
+    cd Algorithm-Visualizer
     ```
 
 4. **Run the Magic:** You're all set! Run the script to start the Sorting Spectacle:
