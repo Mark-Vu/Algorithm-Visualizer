@@ -12,7 +12,7 @@ def generate_list(n):
 
 def main():
     app = App(800, 800, "Algorithm Visualizer")
-    LIST_LENGTH =50
+    LIST_LENGTH =45
     fps = 30
 
     lst = generate_list(LIST_LENGTH)

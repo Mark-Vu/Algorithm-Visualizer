@@ -1,4 +1,5 @@
 import pygame
+from collections import deque
 
 pygame.init()
 class Algo:
@@ -79,6 +80,10 @@ class Algo:
             self.filled_sorted(i, "ORANGE")
 
     def merge_sort(self):
+        """
+        Iterative merge sort
+        :return: void
+        """
         def merge(temp, l, mid, r):
             a = l
             b = l
@@ -87,6 +92,7 @@ class Algo:
             while b <= mid and c <= r:
                 self.app.draw_app(self.lst, True, color={b: "RED", c:"GREEN"},
                 sorted_elements = self.sorted_elements)
+
                 yield
                 if self.lst[b] < self.lst[c]:
                     temp[a] = self.lst[b]
@@ -103,12 +109,13 @@ class Algo:
                 b = b + 1
 
             # copy back
-            for b in range(l, r + 1):
-                self.app.draw_app(self.lst, True, color={b: "ORANGE"},
+            for i in range(l, r + 1):
+                self.app.draw_app(self.lst, True, color={i: "ORANGE"},
                                   sorted_elements=self.sorted_elements)
                 yield
-                self.filled_sorted(self.lst[b], "ORANGE")
-                self.lst[b] = temp[b]
+                self.filled_sorted(self.lst[i], "ORANGE")
+                # pygame.time.delay(250)
+                self.lst[i] = temp[i]
 
         low = 0
         high = self.len_lst - 1
@@ -124,7 +131,52 @@ class Algo:
 
             d = 2 * d
 
+    def quick_sort(self):
+        def swap(A, i, j):
+            temp = A[i]
+            A[i] = A[j]
+            A[j] = temp
+            self.app.draw_app(self.lst, True, color={i: "RED", j: "YELLOW"}, sorted_elements=self.sorted_elements)
+            yield
+
+        def partition(a, start, end):
+            pivot = a[end]
+            pivot_index = start
+
+            for i in range(start, end):
+                if a[i] <= pivot:
+                    yield from swap(a, i, pivot_index)
+                    pivot_index = pivot_index + 1
+                    self.app.draw_app(self.lst, True, color={i: "GREEN", pivot_index: "YELLOW"}, sorted_elements=self.sorted_elements)
+                    yield
+
+            yield from swap(a, pivot_index, end)
+
+            return pivot_index
+
+        stack = deque()
+        start = 0
+        end = len(self.lst) - 1
+        stack.append((start, end))
+
+        while stack:
+            start, end = stack.pop()
+            pivot = yield from partition(self.lst, start, end)
+            self.app.draw_app(self.lst, True, color={pivot: "ORANGE"}, sorted_elements=self.sorted_elements)
+
+            if pivot - 1 > start:
+                stack.append((start, pivot - 1))
+
+            if pivot + 1 < end:
+                stack.append((pivot + 1, end))
+
+
+
     def choose_sort(self, algo_name):
+        """
+        :param algo_name -> str
+        :return: sorting_algo -> func
+        """
         if algo_name == "bubble_sort":
             sorting_algo = self.bubble_sort()
 
@@ -136,4 +188,8 @@ class Algo:
 
         if algo_name == "merge_sort":
             sorting_algo = self.merge_sort()
+
+        if algo_name == "quick_sort":
+            sorting_algo = self.quick_sort()
+
         return sorting_algo

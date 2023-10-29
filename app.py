@@ -33,20 +33,24 @@ class App:
         button_count = 3
         button_width = (self.WIDTH//2) // button_count
         button_height = (self.HEIGHT - self.frame_height) // 3.5
-        button_gap = 20
-        button_x = self.WIDTH // 2 - button_gap * button_count
+        button_xgap = 20
+        button_ygap = 20
+        button_x = self.WIDTH // 2 - button_xgap * button_count
         self.buttons = {
             Button(self.screen, button_x, 0, button_width,
                    button_height, text='Bubble') : "bubble_sort",
 
-            Button(self.screen, button_x + button_gap + button_width, 0, button_width,
+            Button(self.screen, button_x + button_xgap + button_width, 0, button_width,
                    button_height, text='Insertion') : "insertion_sort",
 
-            Button(self.screen, button_x + (button_gap + button_width) * 2, 0, button_width,
+            Button(self.screen, button_x + (button_xgap + button_width) * 2, 0, button_width,
                    button_height, text='Selection'): "selection_sort",
 
-            Button(self.screen, button_x, button_height + 20, button_width, button_height,
-                   text='Merge sort'): "merge_sort"
+            Button(self.screen, button_x, button_height + button_ygap, button_width, button_height,
+                   text='Merge sort'): "merge_sort",
+
+            Button(self.screen, button_x + button_xgap + button_width, button_height + button_ygap, button_width, button_height,
+                   text='Quick sort'): "quick_sort"
         }
         self.reset_button = Button(self.screen, self.WIDTH-self.X_PAD - 50, self.HEIGHT // 7, 50, 40, text='Reset')
 
@@ -128,9 +132,9 @@ class Button:
 
 class ImageButton():
     IMGS = {
-        "play_img": "algo_visualizer/button_images/play-button.png",
-        "pause_img": "algo_visualizer/button_images/pause-button.png",
-        "reset_img": "algo_visualizer/button_images/reset.png"
+        "play_img": "./button_images/play-button.png",
+        "pause_img": "./button_images/pause-button.png",
+        "reset_img": "./button_images/reset.png"
     }
 
     def __init__(self, screen, pos, img):
