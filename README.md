@@ -3,6 +3,8 @@
 ## Introduction
 
 Welcome to the Sorting Visualizer! This is no ordinary sorting algorithm visualizer; it's a mesmerizing, educational, and thoroughly entertaining experience. Step right up to witness the magic of sorting algorithms coming to life as they dance, juggle, and perform their incredible routines right on your screen. 
+
+## Sneak peek
 ![image](https://github.com/Mark-Vu/Algorithm-Visualizer/assets/60988497/3c421ed5-ab4f-4b8d-9b96-c1c44416cd68)
 
 **What's This Magic All About? 🎩✨**
