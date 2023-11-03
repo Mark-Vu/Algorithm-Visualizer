@@ -12,14 +12,8 @@ Welcome to the Sorting Visualizer! This is no ordinary sorting algorithm visuali
 Think of it as your very own sorting circus – a place where sorting algorithms are the stars of the show. They'll dance, juggle, and do their magical routines right on your screen. Sorting was never this much fun! We've got a GUI that's as user-friendly as a puppy and animations that are more mesmerizing than a lava lamp.
 
 ## Demo
-
-
-
-https://github.com/Mark-Vu/Algorithm-Visualizer/assets/60988497/9adbc161-e8b6-4800-b0c2-d5b4040cdea3
-
-
-
 Before you dive in, here's a sneak peek of what the Sorting Visualizer has in store:
+https://github.com/Mark-Vu/Algorithm-Visualizer/assets/60988497/d97c3082-75cf-4711-93a4-2d05e2f17602
 
 
 3. **Clone the Repository:** Now, let's get the Sorting Visualizer on your machine. Open your terminal and run the following commands:
